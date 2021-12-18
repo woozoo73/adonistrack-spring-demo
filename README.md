@@ -66,7 +66,7 @@ public class AdonisTrackConfig {
     public FilterRegistrationBean<AdonisTrackHttpTraceFilter> adonisTrackHttpTraceFilter(HttpTraceRepository repository, HttpExchangeTracer tracer) {
         FilterRegistrationBean<AdonisTrackHttpTraceFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new AdonisTrackHttpTraceFilter(repository, tracer));
-        registrationBean.addUrlPatterns("/greeting/*");
+        registrationBean.addUrlPatterns("/greeting/*", "/customer/*");
 
         return registrationBean;
     }
