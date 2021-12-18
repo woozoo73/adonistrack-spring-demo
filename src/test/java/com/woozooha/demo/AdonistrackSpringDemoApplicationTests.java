@@ -1,4 +1,4 @@
-package com.woozooha.adonistrackspringdemo;
+package com.woozooha.demo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

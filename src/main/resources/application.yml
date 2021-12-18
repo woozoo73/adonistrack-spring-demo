@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:log4jdbc:mysql://localhost:3309/demo
+    username: root
+    password:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    jmx:
+      exposure:
+        include: "*"
