@@ -1,4 +1,4 @@
-# adonistrack-spring-demo
+# AdonisTrack - Spring boot demo
 Demo project for AdonisTrack configuration of Spring application
 
 ## Run demo with VM option
