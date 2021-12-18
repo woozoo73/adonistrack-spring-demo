@@ -18,6 +18,7 @@ public class AdonistrackSpringDemoApplication {
 		SpringApplication.run(AdonistrackSpringDemoApplication.class, args);
 
 		log.info("http://localhost:8080/greeting/1");
+		log.info("http://localhost:8080/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/");
 		log.info("http://localhost:8080/webjars/adonistrack-ui/html/invocations.html");
 	}
 

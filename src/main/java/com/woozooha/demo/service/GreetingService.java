@@ -1,7 +1,7 @@
 package com.woozooha.demo.service;
 
+import com.woozooha.demo.dto.CustomerDto;
 import com.woozooha.demo.dto.GreetingDto;
-import com.woozooha.demo.entity.Customer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +12,11 @@ public class GreetingService {
     private final CustomerService customerService;
 
     public GreetingDto getGreeting(Long id, String name) {
-        Customer customer = customerService.getCustomer(id);
+        CustomerDto customerDto = customerService.get(id);
         String customerName = name;
-        if (customer != null) {
-            customerName = customer.getFirstName() + " " + customer.getLastName();
+        if (customerDto != null) {
+            customerService.raiseGreetingCount(id);
+            customerName = customerDto.getFirstName() + " " + customerDto.getLastName();
         }
 
         GreetingDto greetingDto = new GreetingDto();

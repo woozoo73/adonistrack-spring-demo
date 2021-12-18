@@ -75,6 +75,11 @@
 			<artifactId>webjars-locator-core</artifactId>
 			<version>0.48</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.5.9</version>
+		</dependency>
 	</dependencies>
 
 	<build>
