@@ -140,3 +140,23 @@ pom.xml
 
 </project>
 ```
+
+build.gradle
+
+```gradle
+dependencies {
+
+    // ...
+
+    // AdonisTrack
+    implementation 'com.woozooha:adonistrack:2.0.24'
+    implementation 'com.woozooha:adonistrack-springweb:2.0.24'
+    implementation 'com.woozooha:adonistrack-ui:2.0.24'
+
+    // For logging sql
+    implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
+
+    // For adonistrack-ui webjars url location
+    implementation 'org.webjars:webjars-locator-core:0.48'
+}
+```
