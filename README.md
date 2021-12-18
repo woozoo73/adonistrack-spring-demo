@@ -14,9 +14,9 @@ http://localhost:8080/greeting/1
 
 http://localhost:8080/webjars/adonistrack-ui/html/invocations.html
 
-![list](adonistrack-ui-list-01.png "list")
+![list](adonistrack-ui-list-02.png "list")
 
-![sequence](adonistrack-ui-sequence-01.png "sequence")
+![sequence](adonistrack-ui-sequence-02.png "sequence")
 
 ![sequence](adonistrack-ui-metrics-01.png "metrics")
 
