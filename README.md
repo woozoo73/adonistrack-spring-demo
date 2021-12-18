@@ -14,7 +14,7 @@ http://localhost:8080/greeting/1
 
 http://localhost:8080/webjars/adonistrack-ui/html/invocations.html
 
-You can download the this `aspectjweaver-1.9.6.jar` from here.
+You can download the `aspectjweaver-1.9.6.jar` from here.
 
 https://repo1.maven.org/maven2/org/aspectj/aspectjweaver/1.9.6/aspectjweaver-1.9.6.jar
 
