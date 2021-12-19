@@ -7,13 +7,19 @@ Demo project for AdonisTrack configuration of Spring boot application
 -javaagent:/your-path/aspectjweaver-1.9.6.jar
 ```
 
-You can download the `aspectjweaver-1.9.6.jar` from here.
+You can download the `aspectjweaver-1.9.6.jar` file from here.
 
 https://repo1.maven.org/maven2/org/aspectj/aspectjweaver/1.9.6/aspectjweaver-1.9.6.jar
 
 ## Call REST API (GET)
 
+Call the API directly.
+
 http://localhost:8080/greeting/1
+
+Or, Use Swagger.
+
+http://localhost:8080/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/
 
 ## Open AdonisTrack UI page
 
@@ -29,7 +35,7 @@ http://localhost:8080/webjars/adonistrack-ui/html/invocations.html
 
 ## Application configuration to profile
 
-AdonisTrackAspect.java
+[AdonisTrackAspect.java](./src/main/java/com/woozooha/demo/config/AdonisTrackAspect.java)
 
 ```java
 @Aspect
@@ -56,7 +62,9 @@ public class AdonisTrackAspect extends ProfileAspect {
 }
 ```
 
-AdonisTrackConfig.java
+[AdonisTrackConfig.java](./src/main/java/com/woozooha/demo/config/AdonisTrackConfig.java)
+
+If you are using Spring boot actuator, use AdonisTrackHttpTraceFilter.
 
 ```java
 @Configuration
@@ -79,7 +87,10 @@ public class AdonisTrackConfig {
 }
 ```
 
-META-INF/aop.xml
+[META-INF/aop.xml](./src/main/resources/META-INF/aop.xml)
+
+Adonistrack supports load-time-weaving for even more powerful profiling.
+If you want to profile Sql-spy based SQL queries, Transaction, do the following.
 
 ```xml
 <!DOCTYPE aspectj PUBLIC "-//AspectJ//DTD//EN" "http://www.eclipse.org/aspectj/dtd/aspectj.dtd">
@@ -99,7 +110,21 @@ META-INF/aop.xml
 </aspectj>
 ```
 
-pom.xml
+[application.yml](./src/main/resources/application.yml)
+
+Change jdbc url and jdbc driver for SQL logging.
+
+```yml
+spring:
+  datasource:
+    url: jdbc:log4jdbc:mysql://localhost:3309/demo
+    # ...
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+```
+
+[pom.xml](./pom.xml)
+
+If Maven project, add dependencies to the pom.xml file.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -123,6 +148,7 @@ pom.xml
             <groupId>com.woozooha</groupId>
             <artifactId>adonistrack-ui</artifactId>
             <version>2.0.24</version>
+            <scope>runtime</scope>
         </dependency>
 
         <!-- For logging sql -->
@@ -146,9 +172,11 @@ pom.xml
 </project>
 ```
 
-build.gradle
+[build.gradle](./build.gradle)
 
-```gradle
+If Gradle project, add dependencies to the build.gradle file.
+
+```groovy
 dependencies {
 
     // ...
@@ -156,7 +184,7 @@ dependencies {
     // AdonisTrack
     implementation 'com.woozooha:adonistrack:2.0.24'
     implementation 'com.woozooha:adonistrack-springweb:2.0.24'
-    implementation 'com.woozooha:adonistrack-ui:2.0.24'
+    runtimeOnly 'com.woozooha:adonistrack-ui:2.0.24'
 
     // For logging sql
     implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
