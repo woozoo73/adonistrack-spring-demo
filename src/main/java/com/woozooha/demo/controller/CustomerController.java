@@ -23,10 +23,10 @@ public class CustomerController {
     }
 
     @PutMapping("/customer/{id}")
-    public CustomerDto update(@Parameter(example = "1") @PathVariable Long id, @RequestBody CustomerDto dto) {
+    public void update(@Parameter(example = "1") @PathVariable Long id, @RequestBody CustomerDto dto) {
         dto.setId(id);
 
-        return customerService.create(dto);
+        customerService.update(dto);
     }
 
     @DeleteMapping("/customer/{id}")

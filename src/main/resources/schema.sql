@@ -9,4 +9,4 @@ CREATE TABLE customer
     last_name varchar(100) NOT NULL,
     greeting_count int NOT NULL DEFAULT 0,
     PRIMARY KEY (id)
-);
+) DEFAULT CHARSET=utf8;

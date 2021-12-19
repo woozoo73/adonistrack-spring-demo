@@ -7,14 +7,25 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextClosedEvent;
+
 @SpringBootApplication
 @EnableJpaRepositories
 @Slf4j
 public class AdonistrackSpringDemoApplication {
 
+	static MariaDB4jSpringService mariaDB4jSpringService = new MariaDB4jSpringService();
+
 	public static void main(String[] args) {
 		initDb();
-		SpringApplication.run(AdonistrackSpringDemoApplication.class, args);
+		SpringApplication.run(AdonistrackSpringDemoApplication.class, args)
+		.addApplicationListener(new ApplicationListener<ContextClosedEvent>() {
+			@Override
+			public void onApplicationEvent(ContextClosedEvent e) {
+				mariaDB4jSpringService.stop();
+			}
+		});
 
 		log.info("http://localhost:8080/greeting/1");
 		log.info("http://localhost:8080/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/");
@@ -23,7 +34,6 @@ public class AdonistrackSpringDemoApplication {
 
 	@SneakyThrows
 	private static void initDb() {
-		MariaDB4jSpringService mariaDB4jSpringService = new MariaDB4jSpringService();
 		mariaDB4jSpringService.setDefaultPort(3309);
 		mariaDB4jSpringService.start();
 
