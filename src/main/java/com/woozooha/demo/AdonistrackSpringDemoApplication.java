@@ -1,7 +1,6 @@
 package com.woozooha.demo;
 
 import ch.vorburger.mariadb4j.springframework.MariaDB4jSpringService;
-import com.woozooha.adonistrack.aspect.PrintableAspect;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
