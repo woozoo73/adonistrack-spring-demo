@@ -4,6 +4,9 @@ spring:
     username: root
     password:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+  jpa:
+    hibernate:
+      use-new-id-generator-mappings: false
 management:
   endpoints:
     web:
