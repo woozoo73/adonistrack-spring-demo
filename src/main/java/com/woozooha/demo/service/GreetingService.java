@@ -2,14 +2,16 @@ package com.woozooha.demo.service;
 
 import com.woozooha.demo.dto.CustomerDto;
 import com.woozooha.demo.dto.GreetingDto;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class GreetingService {
 
     private final CustomerService customerService;
+
+    public GreetingService(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 
     public GreetingDto getGreeting(Long id, String name) {
         CustomerDto customerDto = customerService.get(id);

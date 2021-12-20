@@ -2,15 +2,16 @@ package com.woozooha.demo;
 
 import ch.vorburger.mariadb4j.springframework.MariaDB4jSpringService;
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableJpaRepositories
-@Slf4j
 public class AdonistrackSpringDemoApplication {
+
+	private static final Logger log = org.slf4j.LoggerFactory.getLogger(AdonistrackSpringDemoApplication.class);
 
 	public static void main(String[] args) {
 		initDb();

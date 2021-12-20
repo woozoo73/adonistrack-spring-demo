@@ -3,14 +3,16 @@ package com.woozooha.demo.controller;
 import com.woozooha.demo.dto.CustomerDto;
 import com.woozooha.demo.service.CustomerService;
 import io.swagger.v3.oas.annotations.Parameter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequiredArgsConstructor
 public class CustomerController {
 
     private final CustomerService customerService;
+
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 
     @GetMapping("/customer/{id}")
     public CustomerDto get(@Parameter(example = "1") @PathVariable Long id) {
