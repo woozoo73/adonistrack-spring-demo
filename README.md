@@ -33,113 +33,9 @@ http://localhost:8080/webjars/adonistrack-ui/html/invocations.html
 
 ![config](adonistrack-ui-config-01.png "cofnig")
 
-## Application configuration to profile
+## Adapt to your application
 
-[AdonisTrackAspect.java](./src/main/java/com/woozooha/demo/config/AdonisTrackAspect.java)
-
-### This setting is very important.
-
-Modify this @Pointcut expression according to your situation.
-For example, change "com.woozooha.demo" to your application top-level package name "com.yourcompany.killerapp".
-
-In this example, resources under the "com.woozooha.demo.config" are excluded.
-The reason for this setting is that it is not called during execution and an error occurs during initialization.
-
-For the pointcut expression, refer to this documentation.
-
-https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#aop-pointcuts
-
-```java
-@Aspect
-@Component
-public class AdonisTrackAspect extends ProfileAspect {
-
-    @Pointcut("execution(* *(..)) && (" +
-            "within(com.woozooha.demo..*) || " +
-            "within(org.springframework.data.repository.Repository+)" +
-            ") && !within(com.woozooha.demo.config..*)")
-    public void executionPointcut() {
-    }
-
-    @Override
-    protected boolean useMemoryWriter() {
-        return false;
-    }
-
-    @Override
-    protected boolean useFileWriter() {
-        return true;
-    }
-
-}
-```
-
-It is absolutely necessary to set up to exclude resources that cause errors.
-In this example, the setting is ...
-
-```
-!within(com.woozooha.demo.config..*)
-```
-
-[AdonisTrackConfig.java](./src/main/java/com/woozooha/demo/config/AdonisTrackConfig.java)
-
-If you are using Spring boot actuator, use AdonisTrackHttpTraceFilter.
-
-```java
-@Configuration
-public class AdonisTrackConfig {
-
-    @Bean
-    public HttpTraceRepository httpTraceRepository() {
-        return new InMemoryHttpTraceRepository();
-    }
-
-    @Bean
-    public FilterRegistrationBean<AdonisTrackHttpTraceFilter> adonisTrackHttpTraceFilter(HttpTraceRepository repository, HttpExchangeTracer tracer) {
-        FilterRegistrationBean<AdonisTrackHttpTraceFilter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setFilter(new AdonisTrackHttpTraceFilter(repository, tracer));
-        registrationBean.addUrlPatterns("/greeting/*", "/customer/*");
-
-        return registrationBean;
-    }
-
-}
-```
-
-[META-INF/aop.xml](./src/main/resources/META-INF/aop.xml)
-
-Adonistrack supports load-time-weaving for even more powerful profiling.
-If you want to profile Sql-spy based SQL queries, Transaction, do the following.
-
-```xml
-<!DOCTYPE aspectj PUBLIC "-//AspectJ//DTD//EN" "http://www.eclipse.org/aspectj/dtd/aspectj.dtd">
-<aspectj>
-    <weaver options="-verbose">
-        <include within="java.sql.Connection+" />
-        <include within="java.sql.Statement+" />
-        <include within="com.woozooha.adonistrack.aspect.TransactionAspect" />
-        <include within="com.woozooha.adonistrack.aspect.SqlSpyAspect" />
-        <exclude within="net.sf.log4jdbc.sql.jdbcapi.ConnectionSpy" />
-        <exclude within="com.zaxxer.hikari..*" />
-    </weaver>
-    <aspects>
-        <aspect name="com.woozooha.adonistrack.aspect.TransactionAspect" />
-        <aspect name="com.woozooha.adonistrack.aspect.SqlSpyAspect" />
-    </aspects>
-</aspectj>
-```
-
-[application.yml](./src/main/resources/application.yml)
-
-Change jdbc url and jdbc driver for SQL logging.
-
-```yml
-spring:
-  datasource:
-    url: jdbc:log4jdbc:mysql://localhost:3309/demo
-    # ...
-    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-```
+### Add depencencies to your application
 
 [pom.xml](./pom.xml)
 
@@ -211,4 +107,118 @@ dependencies {
     // For adonistrack-ui webjars url location
     implementation 'org.webjars:webjars-locator-core:0.48'
 }
+```
+
+### Application configuration to profile
+
+This part is the most **important** and can be **tricky**.
+
+Modify this @Pointcut expression according to your situation.
+For example, change "com.woozooha.demo" to your application top-level package name "com.yourcompany.killerapp".
+
+In this example, resources under the "com.woozooha.demo.config" are excluded.
+The reason for this setting is that it is not called during execution and an error occurs during initialization.
+
+For the pointcut expression, refer to this documentation.
+
+https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#aop-pointcuts
+
+[AdonisTrackAspect.java](./src/main/java/com/woozooha/demo/config/AdonisTrackAspect.java)
+
+```java
+@Aspect
+@Component
+public class AdonisTrackAspect extends ProfileAspect {
+
+    @Pointcut("execution(* *(..)) && (" +
+            "within(com.woozooha.demo..*) || " +
+            "within(org.springframework.data.repository.Repository+)" +
+            ") && !within(com.woozooha.demo.config..*)")
+    public void executionPointcut() {
+    }
+
+    @Override
+    protected boolean useMemoryWriter() {
+        return false;
+    }
+
+    @Override
+    protected boolean useFileWriter() {
+        return true;
+    }
+
+}
+```
+
+It is absolutely necessary to set up to exclude resources that cause errors.
+In this example, the setting is ...
+
+```
+!within(com.woozooha.demo.config..*)
+```
+
+### Set `AdonisTrackHttpTraceFilter` on API endpoints
+
+[AdonisTrackConfig.java](./src/main/java/com/woozooha/demo/config/AdonisTrackConfig.java)
+
+If you are using Spring boot actuator, use AdonisTrackHttpTraceFilter.
+
+```java
+@Configuration
+public class AdonisTrackConfig {
+
+    @Bean
+    public HttpTraceRepository httpTraceRepository() {
+        return new InMemoryHttpTraceRepository();
+    }
+
+    @Bean
+    public FilterRegistrationBean<AdonisTrackHttpTraceFilter> adonisTrackHttpTraceFilter(HttpTraceRepository repository, HttpExchangeTracer tracer) {
+        FilterRegistrationBean<AdonisTrackHttpTraceFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new AdonisTrackHttpTraceFilter(repository, tracer));
+        registrationBean.addUrlPatterns("/greeting/*", "/customer/*");
+
+        return registrationBean;
+    }
+
+}
+```
+
+### Configure load-time-weaving
+
+[META-INF/aop.xml](./src/main/resources/META-INF/aop.xml)
+
+Adonistrack supports load-time-weaving for even more powerful profiling.
+If you want to profile Sql-spy based SQL queries, Transaction, do the following.
+
+```xml
+<!DOCTYPE aspectj PUBLIC "-//AspectJ//DTD//EN" "http://www.eclipse.org/aspectj/dtd/aspectj.dtd">
+<aspectj>
+    <weaver options="-verbose">
+        <include within="java.sql.Connection+" />
+        <include within="java.sql.Statement+" />
+        <include within="com.woozooha.adonistrack.aspect.TransactionAspect" />
+        <include within="com.woozooha.adonistrack.aspect.SqlSpyAspect" />
+        <exclude within="net.sf.log4jdbc.sql.jdbcapi.ConnectionSpy" />
+        <exclude within="com.zaxxer.hikari..*" />
+    </weaver>
+    <aspects>
+        <aspect name="com.woozooha.adonistrack.aspect.TransactionAspect" />
+        <aspect name="com.woozooha.adonistrack.aspect.SqlSpyAspect" />
+    </aspects>
+</aspectj>
+```
+
+### Change jdbc url and driver
+
+[application.yml](./src/main/resources/application.yml)
+
+Change jdbc url and jdbc driver for SQL logging.
+
+```yml
+spring:
+  datasource:
+    url: jdbc:log4jdbc:mysql://localhost:3309/demo
+    # ...
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
 ```
