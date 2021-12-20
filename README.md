@@ -11,13 +11,13 @@ You can download the `aspectjweaver-1.9.6.jar` file from here.
 
 https://repo1.maven.org/maven2/org/aspectj/aspectjweaver/1.9.6/aspectjweaver-1.9.6.jar
 
-## Call REST API (GET)
+## Call REST API
 
-Call the API directly.
+Call the API directly. (GET API)
 
 http://localhost:8080/greeting/1
 
-Or, Use Swagger.
+Or, Call APIs through Swagger.
 
 http://localhost:8080/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/
 
@@ -36,6 +36,18 @@ http://localhost:8080/webjars/adonistrack-ui/html/invocations.html
 ## Application configuration to profile
 
 [AdonisTrackAspect.java](./src/main/java/com/woozooha/demo/config/AdonisTrackAspect.java)
+
+### This setting is very important.
+
+Modify this @Pointcut expression according to your situation.
+For example, change "com.woozooha.demo" to your application top-level package name "com.yourcompany.killerapp".
+
+In this example, resources under the "com.woozooha.demo.config" are excluded.
+The reason for this setting is that it is not called during execution and an error occurs during initialization.
+
+For the pointcut expression, refer to this documentation.
+
+https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#aop-pointcuts
 
 ```java
 @Aspect
@@ -60,6 +72,13 @@ public class AdonisTrackAspect extends ProfileAspect {
     }
 
 }
+```
+
+It is absolutely necessary to set up to exclude resources that cause errors.
+In this example, the setting is ...
+
+```
+!within(com.woozooha.demo.config..*)
 ```
 
 [AdonisTrackConfig.java](./src/main/java/com/woozooha/demo/config/AdonisTrackConfig.java)
@@ -124,7 +143,7 @@ spring:
 
 [pom.xml](./pom.xml)
 
-If Maven project, add dependencies to the pom.xml file.
+In Maven, add dependencies to `pom.xml`.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -174,7 +193,7 @@ If Maven project, add dependencies to the pom.xml file.
 
 [build.gradle](./build.gradle)
 
-If Gradle project, add dependencies to the build.gradle file.
+In Gradle, add dependencies to `build.gradle`.
 
 ```groovy
 dependencies {
