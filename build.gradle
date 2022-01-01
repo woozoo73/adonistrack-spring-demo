@@ -15,6 +15,7 @@ configurations {
 }
 
 repositories {
+	mavenLocal()
 	mavenCentral()
 }
 
@@ -28,9 +29,9 @@ dependencies {
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
 	// AdonisTrack
-	implementation 'com.woozooha:adonistrack:2.0.24'
-	implementation 'com.woozooha:adonistrack-springweb:2.0.24'
-	runtimeOnly 'com.woozooha:adonistrack-ui:2.0.24'
+	implementation 'com.woozooha:adonistrack:2.0.26'
+	implementation 'com.woozooha:adonistrack-springweb:2.0.26'
+	runtimeOnly 'com.woozooha:adonistrack-ui:2.0.27'
 
 	// For logging sql
 	runtimeOnly 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
