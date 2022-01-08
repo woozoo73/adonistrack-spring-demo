@@ -29,6 +29,8 @@ http://localhost:8080/webjars/adonistrack-ui/html/invocations.html
 
 ![sequence](adonistrack-ui-sequence-02.png "sequence")
 
+![sequence](adonistrack-ui-sql-01.png "sql")
+
 ![sequence](adonistrack-ui-metrics-01.png "metrics")
 
 ![config](adonistrack-ui-config-01.png "cofnig")
