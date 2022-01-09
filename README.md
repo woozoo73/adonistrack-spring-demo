@@ -54,17 +54,17 @@ In Maven, add dependencies to `pom.xml`.
         <dependency>
             <groupId>com.woozooha</groupId>
             <artifactId>adonistrack</artifactId>
-            <version>2.0.24</version>
+            <version>2.0.28</version>
         </dependency>
         <dependency>
             <groupId>com.woozooha</groupId>
             <artifactId>adonistrack-springweb</artifactId>
-            <version>2.0.24</version>
+            <version>2.0.28</version>
         </dependency>
         <dependency>
             <groupId>com.woozooha</groupId>
             <artifactId>adonistrack-ui</artifactId>
-            <version>2.0.24</version>
+            <version>2.0.28</version>
             <scope>runtime</scope>
         </dependency>
 
@@ -99,9 +99,9 @@ dependencies {
     // ...
 
     // AdonisTrack
-    implementation 'com.woozooha:adonistrack:2.0.24'
-    implementation 'com.woozooha:adonistrack-springweb:2.0.24'
-    runtimeOnly 'com.woozooha:adonistrack-ui:2.0.24'
+    implementation 'com.woozooha:adonistrack:2.0.28'
+    implementation 'com.woozooha:adonistrack-springweb:2.0.28'
+    runtimeOnly 'com.woozooha:adonistrack-ui:2.0.28'
 
     // For logging sql
     implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
