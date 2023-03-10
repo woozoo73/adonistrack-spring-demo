@@ -197,8 +197,8 @@ If you want to profile Sql-spy based SQL queries, Transaction, do the following.
 <!DOCTYPE aspectj PUBLIC "-//AspectJ//DTD//EN" "http://www.eclipse.org/aspectj/dtd/aspectj.dtd">
 <aspectj>
     <weaver options="-verbose">
-        <include within="java.sql.Connection+" />
-        <include within="java.sql.Statement+" />
+        <include within="net.sf.log4jdbc.sql.jdbcapi.ConnectionSpy" />
+        <include within="net.sf.log4jdbc.sql.jdbcapi.StatementSpy" />
         <include within="com.woozooha.adonistrack.aspect.TransactionAspect" />
         <include within="com.woozooha.adonistrack.aspect.SqlSpyAspect" />
         <exclude within="net.sf.log4jdbc.sql.jdbcapi.ConnectionSpy" />
